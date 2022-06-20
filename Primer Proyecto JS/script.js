@@ -3,76 +3,75 @@
 // 1 Crear un arreglo con las 16 "cartas"
 // 2 desordenar el arr e imprimirlas en cada casilla
 
-const arr = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
-const nums = arr.sort(() => Math.random() - 0.5); // desordenamos el array
-console.log("🚀 ~ file: script.js ~ line 8 ~ nums", nums)
-const li = document.querySelectorAll("li");
-const span = document.querySelector("span")
+const arr = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 "];
 
+//Numero de intentos
+const span = document.querySelector("span");
+let tries = 0;
+span.innerHTML = tries;
 
-let openCard = 0
-let tries = 0
+//Seleccionar todas las cartas
+const cards = document.querySelectorAll(".card");
+let openCard = 0;
 
+//Seleccionar todos los dorsos
+const back = document.querySelectorAll(".back");
 
-
-
-li.forEach(el => {  // recorremos todas las cartas
-    el.addEventListener("click", printNum)
-
-});
-
-function printNum(e) { // funcion que imprime el numero de la carta
-
-    const  liSelected = e.target
-    const numPrint = nums[liSelected.id]; // seleccionamos el numero de la carta seleccionada
-
-    if (!liSelected.classList.contains("match")) { // comprobamos que no haya ninguna pareja que coincida.
-        if (openCard < 2 && !liSelected.classList.contains("selected")) {// comprobamos que el numero de tarjetas destapadas sea menor a 2 y que no este ninguna seleccionada
-
-            liSelected.classList.add("selected"); // le añadimos la clase "selected" para marcarcarla como seleccionada
-            liSelected.innerHTML = numPrint;  // Pintamos del array uno de los 16 numero que coindida con el id de la carta seleccionada (AQUI VAN A IR LAS IMAGENES)
-            openCard++; // aumentamos el numero de tarjetas destapadas
-        }
+//Desodenar arr e introducir el valor de cada posicion en cada div de class back
+function barajar() {
+    const nums = arr.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < nums.length; i++) {
+        back[i].innerHTML = nums[i];
     }
-    console.log(openCard)
+}
+barajar();
 
-    validateCard();
-  
 
+//Seleccionar los li .card y añadirles un evento click
+for (const card of cards) {
+    card.addEventListener("click", flipCard);
 }
 
 
-function validateCard() { // funcion que valida si hay una pareja de cartas
+//Al hacer click se llama a la funcion flipCard, se añade la clase flipped y la clase selected
+function flipCard() {
+    this.classList.add("flipped");
+    this.classList.add("selected");
+    openCard++;
+    if (openCard == 2) {
+        compare();
+    }
+}
 
-    const selected = document.querySelectorAll(".selected") // seleccionamos todas las cartas que tengan la clase "selected"
-    const card1 = selected[0]; // seleccionamos la primera carta
-    const card2 = selected[1]; // seleccionamos la segunda carta
 
-    if (selected.length === 2) { // comprobamos que haya dos cartas seleccionadas
-        
-
-        if (card1.textContent === card2.textContent) { // comprobamos que las dos cartas seleccionadas sean iguales
-            card1.classList.replace("selected", "match"); // si son iguales las ponemos como pareja
-            card2.classList.replace("selected", "match"); 
+//si hay dos cartas seleccionadas se comprueba si son iguales, si lo son solo se les quita la clase selected y sino se les quita la clase flipped y se le quita la clase selected al cabo de 1 segundo
+function compare() {
+    const selected = document.querySelectorAll(".selected");
+    if (selected.length === 2) {
+        tries++;
+        span.innerHTML = tries;
+        if (selected[0].innerHTML === selected[1].innerHTML) {
+            selected[0].classList.replace("selected", "matched");
+            selected[1].classList.replace("selected", "matched");
             openCard = 0;
         }
-        else { // si no son iguales, las volvemos a cerrar
-            
-            tries++
-            span.innerHTML = tries;
+        else {
             setTimeout(() => {
-                card1.innerHTML = " "
-                card2.innerHTML = " "
-                card1.classList.remove("selected") 
-                card2.classList.remove("selected")
-                openCard = 0
-            },1000)
-            
+            selected[0].className = "card";
+            selected[1].className = "card";
+            openCard = 0;
+            }, 1000);
         }
     }
-
 }
 
-
-
-
+//Boton barajar de nuevo y reiniciar el juego
+const button = document.querySelector("button");
+button.addEventListener("click", () => {
+    tries = 0;
+    span.innerHTML = tries;
+    for (const card of cards) {
+        card.className = "card";
+    }
+    setTimeout(() => {barajar();}, 4000);
+});
