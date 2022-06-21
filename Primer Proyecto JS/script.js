@@ -38,7 +38,6 @@ function flipCard() {
 
     if (!this.classList.contains("match")) {
 
-
         if (openCard < 2 && !this.classList.contains("flipped")) {
             this.classList.add("flipped");
     
@@ -77,7 +76,6 @@ function compare() {
         } else {
             // si no son iguales, las volvemos a cerrar
 
-
             if (
                 !card1.classList.contains("match") &&
                 !card2.classList.contains("match")
@@ -101,8 +99,9 @@ button.addEventListener("click", () => {
     span.innerHTML = tries;
     for (const card of cards) {
         card.className = "card";
+        
     }
     setTimeout(() => {
         barajar();
-    }, 4000);
+    }, 3000);
 });

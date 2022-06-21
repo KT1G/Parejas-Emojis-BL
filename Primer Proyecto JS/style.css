@@ -6,7 +6,6 @@
 
 
 
-
 body{
     max-width: 1200px;
     margin: 0 auto; 
@@ -14,6 +13,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color:#111620;
 }
 
 main{
@@ -32,20 +33,26 @@ main{
     text-align: center;
     padding: 2rem;
     gap: 2rem;
-    border: 1px solid black
+    border: 1px solid black;
+
+    background-color: #FCF3CF;
 
 
 }
 
 .game{
-
     display: grid;
     gap: 10px;
+    align-items: center;
+    justify-items: center;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 150px);
 
 }
 
+
+
+/* CARDS */
 
 .card {
     list-style: none;
@@ -68,7 +75,7 @@ main{
     position: absolute;
     height: 100%;
     width: 100%;
-    background: linear-gradient(black, gray);
+    background: linear-gradient(rgb(250, 190, 78), rgb(184, 150, 15));
     display: grid;
     place-content: center;
     font-size: 5rem;
