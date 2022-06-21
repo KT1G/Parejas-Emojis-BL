@@ -73,5 +73,5 @@ button.addEventListener("click", () => {
     for (const card of cards) {
         card.className = "card";
     }
-    setTimeout(() => {barajar();}, 4000);
+    setTimeout(() => {barajar();}, 2000);
 });
