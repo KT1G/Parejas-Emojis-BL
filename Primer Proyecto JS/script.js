@@ -95,12 +95,12 @@ function compare() {
 }
 
 //Boton barajar de nuevo y reiniciar el juego
-const button = document.querySelector("button");
+const button = document.querySelector(".reset");
 button.addEventListener("click", () => {
     tries = 0;
     span.innerHTML = tries;
     for (const card of cards) {
         card.className = "card";
     }
-    setTimeout(() => {barajar();}, 2000);
+    setTimeout(() => {barajar();}, 500);
 });
