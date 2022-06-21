@@ -33,14 +33,14 @@ for (const card of cards) {
 }
 
 
-//Al hacer click se llama a la funcion flipCard, se añade la clase flipped y la clase selected
+//Al hacer click se llama a la funcion flipCard, se añade la clase flipped y la clase selected. Solo puede haber 2 cartas seleccionadas
 function flipCard() {
-    this.classList.add("flipped");
-    this.classList.add("selected");
-    openCard++;
-    if (openCard == 2) {
-        compare();
+    if (openCard < 2) {
+        this.classList.add("flipped");
+        this.classList.add("selected");
+        openCard++;
     }
+    compare();
 }
 
 
