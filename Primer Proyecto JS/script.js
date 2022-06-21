@@ -77,11 +77,11 @@ function compare() {
         } else {
             // si no son iguales, las volvemos a cerrar
 
-
             if (
                 !card1.classList.contains("match") &&
                 !card2.classList.contains("match")
-            ) {
+            ) {/* posible set interval para efecto en cartas de vibracion 
+            */
                 setTimeout(() => {
                     card1.classList.remove("flipped");
                     card2.classList.remove("flipped");

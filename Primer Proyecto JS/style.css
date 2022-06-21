@@ -1,57 +1,177 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.root{
-    
 
+.root {
+    --sombras: -webkit-box-shadow: 10px 9px 17px -6px rgba(0, 0, 0, 0.67);
+    -moz-box-shadow: 10px 9px 17px -6px rgba(0, 0, 0, 0.67);
+    box-shadow: 10px 9px 17px -6px rgba(0, 0, 0, 0.67);
 }
 
-
-body{
+body {
     max-width: 1200px;
-    margin: 0 auto; 
+    margin: 0 auto;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: sans-serif;
 
-    background-color:#111620;
+
+    background-color: #111620;
 }
 
-main{
+main {
     width: 100%;
+    height: 90%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
+
+    border: 1px solid black;
 }
 
-.container{
+
+/* CONTENEDORES PRINCIPAL 1 */
+
+.container {
     width: 75%;
+    max-width: 900px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem 1rem;
     gap: 2rem;
     border: 1px solid black;
+    border-radius: 1rem;
 
-    background-color: #FCF3CF;
+    background: linear-gradient(rgb(206, 255, 244), rgb(96, 223, 255));
 
 
 }
 
-.game{
+.background {
+    border: 5px solid rgb(255, 231, 195);
+    background-color: #070808a9;
+    padding: 3rem;
+    border-radius: 1rem;
+
+}
+
+h1 {
+
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 4rem;
+    color: #000000;
+    font-weight: bold;
+
+
+
+}
+
+.game {
     display: grid;
-    gap: 10px;
+    gap: 2rem;
     align-items: center;
     justify-items: center;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 150px);
 
+}
+
+/* CONTENEDORES PRINCIPAL 2 */
+
+.container_ranking {
+    width: 75%;
+    height: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    gap: 2rem;
+    border: 5px solid black;
+    border-radius: 1rem;
+    background: linear-gradient(rgb(255, 205, 113), rgb(255, 230, 128));
+}
+
+
+button {
+    width: 100%;
+    border: 3px solid rgb(134, 65, 0);
+    background-color: #070808a9;
+    border-radius: 0.4rem;
+    color: #f7f1f1;
+    background-color: #070808a9;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 2px;
+    cursor: pointer;
+
+}
+
+
+button:hover {
+    background-color: #f7f1f1;
+    color: #070808;
+}
+
+.ranking {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+    flex: 2;
+
+
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.persons {
+    border: 2px solid #473100;
+    border-radius: 0.1rem;
+    list-style: none;
+    font-size: 30px;
+    font-weight: bold;
+
+
+
+}
+
+.background_ranking {
+    width: 100%;
+    border: 2px solid rgb(37, 35, 32);
+    background: linear-gradient(rgb(255, 242, 217), rgb(255, 232, 129));
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+}
+
+
+.tries {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+
+    margin-top: 1rem;
+    padding: 1rem;
+    text-align: left;
+    
 }
 
 
@@ -60,11 +180,23 @@ main{
 
 .card {
     list-style: none;
-    width: 100px;
-    height: 150px;
+    width: 110px;
+    height: 160px;
     perspective: 600px;
     margin: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    -webkit-box-shadow: 10px 9px 17px -6px rgba(0, 0, 0, 0.67);
+    -moz-box-shadow: 10px 9px 17px -6px rgba(0, 0, 0, 0.67);
+    box-shadow: 10px 9px 17px -6px rgba(0, 0, 0, 0.67);
+
 }
+
+.card:hover .front {
+    transition: transform 0.2s;
+    transform: scale(1.1);
+}
+
 
 .content {
     position: absolute;
@@ -90,18 +222,10 @@ main{
 
 .back {
     background: linear-gradient(steelblue, lightsteelblue);
-    transform: rotateY( 180deg );
+    transform: rotateY(180deg);
 }
 
 .card.flipped .content {
-    transform: rotateY( 180deg ) ;
+    transform: rotateY(180deg);
     transition: transform 0.5s;
-}
-
-
-.tries{
-    width: 100%;
-    padding: 1rem;
-    text-align: left;
-    border: 1px solid black;
 }
