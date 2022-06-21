@@ -41,7 +41,7 @@ function flipCard() {
 
         if (openCard < 2 && !this.classList.contains("flipped")) {
             this.classList.add("flipped");
-    
+
             openCard++;
             compare();
         }
@@ -55,39 +55,58 @@ function compare() {
 
     const li = document.querySelectorAll("li");
     const arrli = [...li]; // seleccionamos todas las cartas que tengan la clase "selected"
-    
+
     const selected = arrli.filter((el) => {
         if (el.classList.contains("flipped") && !el.classList.contains("match")) {
             return el;
         }
     }); // filtramos las cartas que tengan la clase "selected"
-    
+
     const card1 = selected[0]; // seleccionamos la primera carta
     const card2 = selected[1]; // seleccionamos la segunda carta
     if (selected.length === 2) {
         tries++;
         span.innerHTML = tries;
         // comprobamos que haya dos cartas seleccionadas
-        
+
         if (card1.textContent === card2.textContent) {
             // comprobamos que las dos cartas seleccionadas sean iguales
             card1.classList.add("match"); // si son iguales las ponemos como pareja
             card2.classList.add("match");
+
+            setTimeout(() => {
+                card1.classList.add("point");
+                card2.classList.add("point");
+            }, 200);
+
             openCard = 0;
+
+
         } else {
             // si no son iguales, las volvemos a cerrar
 
             if (
                 !card1.classList.contains("match") &&
                 !card2.classList.contains("match")
-            ) {/* posible set interval para efecto en cartas de vibracion 
-            */
+            ) {
                 setTimeout(() => {
-                    card1.classList.remove("flipped");
-                    card2.classList.remove("flipped");
+                    card1.classList.add("shaking")
+                    card2.classList.add("shaking")
+                }, 260)
+
+                setTimeout(() => {
+                    card1.classList.remove("flipped", "shaking");
+                    card2.classList.remove("flipped", "shaking");
                     openCard = 0;
                 }, 1000);
             } else {
+
+                setTimeout(() => {
+                    card1.classList.remove("point");
+                    card2.classList.remove("point");
+                    openCard = 0;
+                }, 2000);
+
 
             }
         }
@@ -102,5 +121,7 @@ button.addEventListener("click", () => {
     for (const card of cards) {
         card.className = "card";
     }
-    setTimeout(() => {barajar();}, 500);
+    setTimeout(() => {
+        barajar();
+    }, 500);
 });

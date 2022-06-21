@@ -21,12 +21,12 @@ body {
 
 main {
     width: 100%;
-    
+
     display: flex;
     justify-content: center;
     align-items: stretch;
 
-    
+
 }
 
 
@@ -165,7 +165,7 @@ h2 {
     text-align: center;
     font-size: 2rem;
     text-align: left;
-    
+
 }
 
 
@@ -187,7 +187,6 @@ h2 {
 }
 
 .card:hover .front {
-    transition: transform 0.2s;
     transform: scale(1.1);
 }
 
@@ -202,6 +201,7 @@ h2 {
 
 .front,
 .back {
+    transition: transform 0.2s;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -222,4 +222,45 @@ h2 {
 .card.flipped .content {
     transform: rotateY(180deg);
     transition: transform 0.5s;
+}
+
+.shaking {
+    
+    animation: shaking 0.2s ease-in forwards infinite alternate
+}
+
+.point  {
+
+    animation: point 0.25s ease-in forwards  alternate
+}
+
+/* ANIMACION */
+
+@keyframes shaking {
+    0% {
+        transform: rotate(4deg);
+
+    }
+
+    50% {
+        transform: rotate(-4deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+@keyframes point {
+    0% {
+        transform: scale(1);
+
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
