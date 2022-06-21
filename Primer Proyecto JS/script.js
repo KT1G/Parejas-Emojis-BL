@@ -35,32 +35,61 @@ for (const card of cards) {
 
 //Al hacer click se llama a la funcion flipCard, se añade la clase flipped y la clase selected. Solo puede haber 2 cartas seleccionadas
 function flipCard() {
-    if (openCard < 2) {
-        this.classList.add("flipped");
-        this.classList.add("selected");
-        openCard++;
+
+    if (!this.classList.contains("match")) {
+
+
+        if (openCard < 2 && !this.classList.contains("flipped")) {
+            this.classList.add("flipped");
+    
+            openCard++;
+            compare();
+        }
+
     }
-    compare();
 }
 
 
 //si hay dos cartas seleccionadas se comprueba si son iguales, si lo son solo se les quita la clase selected y sino se les quita la clase flipped y se le quita la clase selected al cabo de 1 segundo
 function compare() {
-    const selected = document.querySelectorAll(".selected");
+
+    const li = document.querySelectorAll("li");
+    const arrli = [...li]; // seleccionamos todas las cartas que tengan la clase "selected"
+    
+    const selected = arrli.filter((el) => {
+        if (el.classList.contains("flipped") && !el.classList.contains("match")) {
+            return el;
+        }
+    }); // filtramos las cartas que tengan la clase "selected"
+    
+    const card1 = selected[0]; // seleccionamos la primera carta
+    const card2 = selected[1]; // seleccionamos la segunda carta
     if (selected.length === 2) {
         tries++;
         span.innerHTML = tries;
-        if (selected[0].innerHTML === selected[1].innerHTML) {
-            selected[0].classList.replace("selected", "matched");
-            selected[1].classList.replace("selected", "matched");
+        // comprobamos que haya dos cartas seleccionadas
+        
+        if (card1.textContent === card2.textContent) {
+            // comprobamos que las dos cartas seleccionadas sean iguales
+            card1.classList.add("match"); // si son iguales las ponemos como pareja
+            card2.classList.add("match");
             openCard = 0;
-        }
-        else {
-            setTimeout(() => {
-            selected[0].className = "card";
-            selected[1].className = "card";
-            openCard = 0;
-            }, 1000);
+        } else {
+            // si no son iguales, las volvemos a cerrar
+
+
+            if (
+                !card1.classList.contains("match") &&
+                !card2.classList.contains("match")
+            ) {
+                setTimeout(() => {
+                    card1.classList.remove("flipped");
+                    card2.classList.remove("flipped");
+                    openCard = 0;
+                }, 1000);
+            } else {
+
+            }
         }
     }
 }
