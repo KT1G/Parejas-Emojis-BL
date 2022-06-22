@@ -1,7 +1,10 @@
 "use strict"
 
+
+
 // 1 Crear un arreglo con las 16 "cartas"
 // 2 desordenar el arr e imprimirlas en cada casilla
+
 
 const arr = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 "];
 
@@ -16,6 +19,25 @@ let openCard = 0;
 
 //Seleccionar todos los dorsos
 const back = document.querySelectorAll(".back");
+
+//seleccionamos el buton del form
+const butonInput = document.querySelector(".buton_input")
+
+//seleccionamos el main 
+const main = document.querySelector("main")
+
+//seleccionamos el inpunt del header
+
+const input = document.querySelector("input")
+
+//seleccionamos el header 
+const header = document.querySelector("header")
+
+//seleccionamos el "h2 del Game"
+const nameTitle = document.querySelector(".insert_name");
+
+
+
 
 //Desodenar arr e introducir el valor de cada posicion en cada div de class back
 function barajar() {
@@ -125,3 +147,78 @@ button.addEventListener("click", () => {
         barajar();
     }, 500);
 });
+
+// EXPORTAR A OTRO ARCHIVO JS
+
+
+
+// Funcion para colocar el nombre del jugador en el titulo del juego
+function printNameTitle(name) {
+
+ nameTitle.textContent = `Find The Partners ${name}`;
+    
+}
+
+
+//Funcion que controla el inicio del juego y nos guarda el nombre en un localStorage
+document.addEventListener("keydown", (e) => {
+    console.log(e);
+    let name = input.value.toUpperCase()
+    let names = []
+    
+    printNameTitle(name);
+    
+    // Posibles validaciones
+    if (isNaN(name) && name.length <= 6) {
+        
+        if (e.code === "Enter" && name) {
+    
+            
+            if (!JSON.parse(localStorage.getItem("names"))) {
+                
+                localStorage.setItem("names", JSON.stringify(names));
+            }
+            
+            names = JSON.parse(localStorage.getItem("names"));
+            
+            if (!names.includes(name)) {
+                names.push(name)
+            }
+    
+            localStorage.setItem("names", JSON.stringify(names));
+    
+            
+            header.classList.add("form_hide")
+            main.classList.remove("main_hide")
+    
+        }
+    }
+        
+    });
+
+    // EN CASO DE QUERER HACERLO PULSANDO UN BOTON
+    /* 
+    butonInput.addEventListener("click", () => {
+
+        let names = []
+        let name = input.value
+        
+        if (!JSON.parse(localStorage.getItem("names"))) {
+
+        localStorage.setItem("names", JSON.stringify(names));
+    }
+
+    names = JSON.parse(localStorage.getItem("names"));
+
+    if (!names.includes(name)) {
+        names.push(name)
+    }
+
+    localStorage.setItem("names", JSON.stringify(names));
+
+
+
+    header.classList.add("form_hide");
+    main.classList.remove("main_hide");
+
+}); */
