@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+.main_hide{
+    display: none;
+}
+.form_hide{
+    display: none;
+
+}
+
 
 
 body {
@@ -14,10 +22,9 @@ body {
     justify-content: center;
     align-items: center;
     font-family: sans-serif;
-
-
-    background-color: #111620;
+    background-color: #1d2b3a;
 }
+
 
 main {
     width: 100%;
@@ -25,9 +32,67 @@ main {
     grid-template-columns: minmax(800px, 3fr) 1fr;
     align-items: center;
     justify-content: center;
-
-
+    
 }
+
+
+
+
+
+/* HEADER */
+
+header{
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+
+h1{
+    color: rgb(239, 239, 239);
+    font-size: 4rem;
+}
+
+
+/* Input */
+
+.inputBox{
+    position: relative;
+    width: 600px ;
+}
+
+.inputBox input {
+    width: 100%;
+    height: 10vh;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color : #fff;
+    font-size: 3em;
+    text-transform: uppercase;
+}
+
+.inputBox > h2{
+    position: absolute;
+    left: 0;
+    font-size: 3em;
+    padding: 10px;
+    margin-top: 7px;
+    pointer-events: none;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+}
+
+
+::placeholder{
+    color:rgba(255,255,255,0.25)
+}
+
 
 
 /* CONTENEDORES PRINCIPAL 1 */
@@ -45,10 +110,10 @@ main {
     gap: 0.5rem;
     border: 1px solid black;
     border-radius: 1rem;
-
+    
     background: linear-gradient(rgb(206, 255, 244), rgb(96, 223, 255));
-
-
+    
+    
 }
 
 .background {
@@ -60,16 +125,15 @@ main {
 
 }
 
-h1 {
-
+.container > h2 {
+    
     padding: 0.5rem 1rem;
     border-radius: 0.4rem;
     font-size: 4rem;
     color: #000000;
     font-weight: bold;
-
-
-
+    
+    
 }
 
 .game {
@@ -338,7 +402,6 @@ ol>h2 {
         justify-content: center;
         align-items: center;
         width: 10rem;
-
 
     }
 
