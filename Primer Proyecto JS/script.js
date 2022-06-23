@@ -6,19 +6,39 @@
 // 2 desordenar el arr e imprimirlas en cada casilla
 
 
-const arr = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 "];
+const arr1 = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 "];
+const arr2 = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 ", "😍", "😍", "🥶", "🥶"];
+const arr3 = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 ", "😍", "😍", "🥶", "🥶", "😭", "😭", "😴", "😴"];
+
+let arr = arr1;
+let tries;
+let span = document.querySelector("span");
 
 //Numero de intentos
-const span = document.querySelector("span");
-let tries = 0;
-span.innerHTML = tries;
+function attempts(){
+    span = document.querySelector("span");
+    tries = 0;
+    span.innerHTML = tries;
+}
+attempts();
 
 //Seleccionar todas las cartas
-const cards = document.querySelectorAll(".card");
+let cards = document.querySelectorAll(".card");
+
+//Cartas abiertas
 let openCard = 0;
 
+//Seleccionar la ul
+const ul = document.querySelector(".game");
+
 //Seleccionar todos los dorsos
-const back = document.querySelectorAll(".back");
+let back = document.querySelectorAll(".back");
+
+//Seleccionar el Nivel
+const levels = document.querySelectorAll(".levels");
+for (const level of levels) {
+    level.addEventListener("click", selectArrayEmojis);
+}
 
 //seleccionamos el buton del form
 const butonInput = document.querySelector(".buton_input")
@@ -36,23 +56,73 @@ const header = document.querySelector("header")
 //seleccionamos el "h2 del Game"
 const nameTitle = document.querySelector(".insert_name");
 
+//Funcion que segun el boton elige un array de emojis y rediseña la cuadricula
+function selectArrayEmojis() {
+    if (this.classList.contains("l1")) {
+        arr = arr1;
+    }
+    if (this.classList.contains("l2")) {
+        arr = arr2;
+    }
+    if (this.classList.contains("l3")) {
+        arr = arr3;
+    }
+    return redesign(arr);
+}
 
+//Funcion Rediseño segun nivel
+function redesign(array) {
+    const column = array.length / 4;
+    ul.innerHTML = "";
+    ul.removeAttribute("style");
+    ul.style.gridTemplateColumns = `repeat(${column}, 1fr)`;
+    create(array);
+    back = document.querySelectorAll(".back");
+    shuffle(array);
+    cards = document.querySelectorAll(".card");
+    selectFlip();
+    attempts();
+    compare();
+}
+
+
+//Crear las cartas
+function create(array) {
+    const fragment = document.createDocumentFragment();
+    for (const el of array) {
+        const li = document.createElement("li");        //Creo li con class="card"
+        li.classList.add("card");
+
+        li.innerHTML = `<div class="content">
+                            <div class="front">❔</div>
+                            <div class="back"></div>
+                        </div>`;
+        fragment.append(li)
+    }
+    ul.append(fragment);
+    cards = document.querySelectorAll(".card")
+}
+create(arr);
 
 
 //Desodenar arr e introducir el valor de cada posicion en cada div de class back
-function barajar() {
-    const nums = arr.sort(() => Math.random() - 0.5);
+function shuffle(array) {
+    back = document.querySelectorAll(".back");
+    const nums = array.sort(() => Math.random() - 0.5);
     for (let i = 0; i < nums.length; i++) {
         back[i].innerHTML = nums[i];
     }
+    console.log(nums);
 }
-barajar();
 
 
 //Seleccionar los li .card y añadirles un evento click
-for (const card of cards) {
-    card.addEventListener("click", flipCard);
+function selectFlip(){
+    for (const card of cards) {
+        card.addEventListener("click", flipCard);
+    }
 }
+selectFlip();
 
 
 //Al hacer click se llama a la funcion flipCard, se añade la clase flipped y la clase selected. Solo puede haber 2 cartas seleccionadas
@@ -137,16 +207,18 @@ function compare() {
 
 //Boton barajar de nuevo y reiniciar el juego
 const button = document.querySelector(".reset");
-button.addEventListener("click", () => {
+button.addEventListener("click", reset);
+function reset() {
     tries = 0;
     span.innerHTML = tries;
     for (const card of cards) {
         card.className = "card";
     }
     setTimeout(() => {
-        barajar();
+        shuffle(arr);
     }, 500);
-});
+}
+reset();
 
 // EXPORTAR A OTRO ARCHIVO JS
 
