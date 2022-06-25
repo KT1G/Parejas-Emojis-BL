@@ -207,9 +207,36 @@ button:hover {
 
 }
 
-ol>h2 {
+h2 {
     text-decoration: underline;
     font-size: 2rem;
+}
+
+.butomsRanking{
+    display: flex;
+    width: 100%;
+    gap: 2rem
+}
+
+.moveRankingLevels{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img{
+    width: 30px;
+    height: 30px;
+}
+
+.ranking{
+    list-style-position: inside;
+    display: flex;
+    height: fit-content;
+}
+
+.ranking li{
+    width: fit-content;
 }
 
 .persons {
@@ -224,6 +251,11 @@ ol>h2 {
 
 .background_ranking {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
     border: 2px solid rgb(37, 35, 32);
     background: linear-gradient(rgb(255, 242, 217), rgb(255, 232, 129));
     padding: 2rem 1rem;
