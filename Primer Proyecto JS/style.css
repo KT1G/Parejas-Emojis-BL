@@ -190,11 +190,20 @@ button {
 
 }
 
+.l1{
+    background: #FFFFFF;
+    color : black
+
+}
+
 
 button:hover {
     background: #f7f1f1;
     color: #070808;
 }
+
+
+
 
 .ranking {
     display: flex;
@@ -207,7 +216,7 @@ button:hover {
 
 }
 
-h2 {
+.ranking > h2 {
     text-decoration: underline;
     font-size: 2rem;
 }
@@ -284,7 +293,6 @@ img{
     text-align: center;
     font-size: 26px;
     text-align: left;
-
 }
 
 
@@ -445,6 +453,9 @@ img{
 
     .ranking {
         height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         -ms-overflow-style: none;
         /* for Internet Explorer, Edge */
         scrollbar-width: none;
