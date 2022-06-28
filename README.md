@@ -38,5 +38,5 @@ AÑADIDOS
 
 RESULTADO FINAL
 
-![imagen de ejemplo]()
+
 
