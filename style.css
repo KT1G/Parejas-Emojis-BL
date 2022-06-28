@@ -201,8 +201,8 @@ button {
 }
 
 
-button:hover {
-    background: #c0c0c0;
+.reset:hover {
+    background: #f7f1f1;
     color: #070808;
 }
 
@@ -486,12 +486,5 @@ img{
         min-width: 200px;
     }
 
-    /* ol>h2 {
-
-        margin: 0;
-        color: rgb(13, 14, 0);
-
-        font-size: 45px;
-        text-align: center;
-    } */
+  
 }
