@@ -171,12 +171,21 @@ function flipCard() {
     }
     if (cards.length === document.querySelectorAll(".match").length) {
         addUser();
+        const matches = document.querySelectorAll(".match")
         //seleccionar el class="insert_name" y cambiarlo por una frase con el nombre del usuario y  ¡Has ganado!
         const title = nameTitle.innerHTML;
         nameTitle.innerHTML = `¡Has ganado!`;
+        matches.forEach(el => {
+            setTimeout(() => {
+                el.classList.add("win");;
+            }, 300);
+
+        })
+
         setTimeout(() => {
             nameTitle.innerHTML = title;
-        }, 5000);
+            reset()
+        }, 1000);
     }
 }
 
