@@ -6,9 +6,9 @@
 // 2 desordenar el arr e imprimirlas en cada casilla
 
 
-const arr1 = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 "];
-const arr2 = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 ", "😍", "😍", "🥶", "🥶"];
-const arr3 = ["😀", "😀", "😎", "😎", "😈 ", "😈 ", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", " 👻 ", " 👻 ", "😍", "😍", "🥶", "🥶", "😭", "😭", "😴", "😴"];
+const arr1 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻"];
+const arr2 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻", "😍", "😍", "🥶", "🥶"];
+const arr3 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻", "😍", "😍", "🥶", "🥶", "😭", "😭", "😴", "😴"];
 
 let arr = arr1;
 let tries;
@@ -322,14 +322,27 @@ const object = {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Funcion para añadir un array de usuarios y sus puntos
 let gameUser, gameTries;
 function addUser() {
     //Comprobar que todas las cartas tengan la clase "match"
     if (cards.length === document.querySelectorAll(".match").length) {
-        //Conseguir el nombre del usuario
-        gameUser = document.querySelector("input").value.toUpperCase();
-        console.log(gameUser);
+        /* //Conseguir el nombre del usuario
+        gameUser = nombre;
+        console.log(gameUser); */
         //Conseguir el numero de tries
         gameTries = tries;
         //Comprobar el gameLevel
@@ -379,19 +392,19 @@ function checkUser(user, array) {
         array.push([user, gameTries]);
     }
     else {
+        //Comprobar si el usuario esta en la lista
         for (let i = 0; i < array.length; i++) {
             if (array[i][0] === user) {
-                console.log("El usuario ya existe");
+                //Si esta en la lista actualizar el numero de tries al mas bajo
+                console.log("El usuario esta en la lista");
                 if (array[i][1] > gameTries) {
                     array[i][1] = gameTries;
-                    break;
                 }
-            }
-            else {
-                array.push([user, gameTries]);
-                break;
+                return;
             }
         }
+        //Si no esta en la lista añadir el usuario y sus puntos
+        array.push([user, gameTries]);
     }
 }
 
@@ -471,22 +484,24 @@ function reset() {
 }
 reset();
 
+
 //Volver a introducir el nombre del usuario en el input
 const changePlayer = document.querySelector(".changePlayer");
 changePlayer.addEventListener("click", changePlayerName);
 function changePlayerName() {
-    const newName = prompt("Introduce tu nombre").toUpperCase();
-    //mostrar el nombre del usuario en el input
-    nombre = newName;
+    gameUser = prompt("Introduce tu nombre").toUpperCase();
     //cambiar el nombre del usuario en el input
-    document.querySelector("input").value = newName;
-    printNameTitle(nombre);
+    document.querySelector("input").value = gameUser;
+    printNameTitle(gameUser);
     reset();
 }
 
 
 
 // EXPORTAR A OTRO ARCHIVO JS
+
+//funcion para cambiar el nombre del usuario en el input y guardarlo en gameUser
+
 
 
 
@@ -496,19 +511,18 @@ function printNameTitle(nombre) {
 }
 
 
-//Funcion que controla el inicio del juego y nos guarda el nombre en un localStorage
-let nombre;
+//Funcion con ey down que controla el inicio del juego y nos guarda el nombre en un localStorage
+
 document.addEventListener("keydown", (e) => {
     console.log(e);
-    nombre = input.value.toUpperCase()
-    let names = []
+    gameUser = input.value.toUpperCase();
     
-    printNameTitle(nombre);
+    printNameTitle(gameUser);
     
     // Posibles validaciones
-    if (isNaN(nombre) && nombre.length <= 6) {
+    if (isNaN(gameUser) && gameUser.length <= 6) {
         
-        if (e.code === "Enter" && nombre) {
+        if (e.code === "Enter" && gameUser) {
             header.classList.add("form_hide")
             main.classList.remove("main_hide")
         } 
