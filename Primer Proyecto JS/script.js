@@ -1,91 +1,33 @@
-"use strict";
+"use strict"
+
+
 
 // 1 Crear un arreglo con las 16 "cartas"
 // 2 desordenar el arr e imprimirlas en cada casilla
 
-const arr1 = [
-    "😀",
-    "😀",
-    "😎",
-    "😎",
-    "😈",
-    "😈",
-    "🤣",
-    "🤣",
-    "😝",
-    "😝",
-    "😖",
-    "😖",
-    "👹",
-    "👹",
-    "👻",
-    "👻",
-];
-const arr2 = [
-    "😀",
-    "😀",
-    "😎",
-    "😎",
-    "😈",
-    "😈",
-    "🤣",
-    "🤣",
-    "😝",
-    "😝",
-    "😖",
-    "😖",
-    "👹",
-    "👹",
-    "👻",
-    "👻",
-    "😍",
-    "😍",
-    "🥶",
-    "🥶",
-];
-const arr3 = [
-    "😀",
-    "😀",
-    "😎",
-    "😎",
-    "😈",
-    "😈",
-    "🤣",
-    "🤣",
-    "😝",
-    "😝",
-    "😖",
-    "😖",
-    "👹",
-    "👹",
-    "👻",
-    "👻",
-    "😍",
-    "😍",
-    "🥶",
-    "🥶",
-    "😭",
-    "😭",
-    "😴",
-    "😴",
-];
+
+const arr1 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻"];
+const arr2 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻", "😍", "😍", "🥶", "🥶"];
+const arr3 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻", "😍", "😍", "🥶", "🥶", "😭", "😭", "😴", "😴"];
 
 let arr = arr1;
 let tries;
 let span = document.querySelector("span");
 //variables del local storage
-let usersPoints = [];
-let names = [];
+let usersPoints = []
+let names = []
 
 /* const level1 = 1
 const level2 = 2
 const level3 = 3 */
+
 
 //Numero de intentos
 function attempts() {
     span = document.querySelector("span");
     tries = 0;
     span.innerHTML = tries;
+
 }
 attempts();
 
@@ -107,14 +49,15 @@ for (const level of levels) {
     level.addEventListener("click", selectArrayEmojis);
 }
 
-//seleccionamos el main
-const main = document.querySelector("main");
+
+//seleccionamos el main 
+const main = document.querySelector("main")
 
 //seleccionamos el inpunt del header
-const input = document.querySelector("input");
+const input = document.querySelector("input")
 
-//seleccionamos el header
-const header = document.querySelector("header");
+//seleccionamos el header 
+const header = document.querySelector("header")
 
 //seleccionamos el "h2 del Game"
 let nameTitle = document.querySelector(".insert_name");
@@ -122,53 +65,62 @@ let nameTitle = document.querySelector(".insert_name");
 //seleccionamos todas las cartas que tengan la clase match
 
 //Seleccionamos el ranking
-const ranking = document.querySelector("ol");
+const ranking = document.querySelector("ol")
 
-// selecionamos los botones
-const boton1 = document.querySelector(".l1");
-const boton2 = document.querySelector(".l2");
-const boton3 = document.querySelector(".l3");
+
+// selecionamos los botones 
+const boton1 = document.querySelector(".l1")
+const boton2 = document.querySelector(".l2")
+const boton3 = document.querySelector(".l3")
+
+
 
 //Funcion que segun el boton elige un array de emojis y rediseña la cuadricula y los stilos de los botones
 function selectArrayEmojis() {
+
+
     if (this.classList.contains("l1")) {
         arr = arr1;
+
 
         boton1.classList.add("marked");
         boton2.classList.remove("marked");
         boton3.classList.remove("marked");
 
-        boton2.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton3.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton2.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton3.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+
     }
     if (this.classList.contains("l2")) {
         arr = arr2;
+
 
         boton1.classList.remove("marked");
         boton2.classList.add("marked");
         boton3.classList.remove("marked");
 
-        boton1.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton3.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+
+        boton1.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton3.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+
     }
     if (this.classList.contains("l3")) {
         arr = arr3;
+
 
         boton1.classList.remove("marked");
         boton2.classList.remove("marked");
         boton3.classList.add("marked");
 
-        boton1.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton2.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+
+        boton1.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton2.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+
     }
     return redesign(arr);
 }
+
+
 
 //Funcion Rediseño segun nivel
 function redesign(array) {
@@ -186,6 +138,8 @@ function redesign(array) {
     compare();
 }
 
+
+
 //Crear las cartas
 function create(array) {
     const fragment = document.createDocumentFragment();
@@ -200,9 +154,11 @@ function create(array) {
         fragment.append(li); //Añado el li al fragment
     }
     ul.append(fragment); //Añado el fragment al ul
-    cards = document.querySelectorAll(".card"); //Selecciono todos los li .card
+    cards = document.querySelectorAll(".card") //Selecciono todos los li .card
 }
 create(arr);
+
+
 
 //Desodenar arr e introducir el valor de cada posicion en cada div de class back
 function shuffle(array) {
@@ -214,6 +170,8 @@ function shuffle(array) {
     console.log(nums);
 }
 
+
+
 //Seleccionar los li .card y añadirles un evento click
 function selectFlip() {
     for (const card of cards) {
@@ -222,16 +180,22 @@ function selectFlip() {
 }
 selectFlip();
 
+
+
 //Al hacer click se llama a la funcion flipCard, se añade la clase flipped
 //Solo puede haber 2 cartas seleccionadas
 function flipCard() {
+
     if (!this.classList.contains("match")) {
+
+
         if (openCard < 2 && !this.classList.contains("flipped")) {
             this.classList.add("flipped");
 
             openCard++;
             compare();
         }
+
     }
     if (cards.length === document.querySelectorAll(".match").length) {
         addUser();
@@ -250,6 +214,8 @@ function flipCard() {
         }, 5000);
     }
 }
+
+
 
 //si hay dos cartas seleccionadas se comprueba si son iguales, si lo son solo se les quita la clase selected y sino se les quita la clase flipped y se le quita la clase selected al cabo de 1 segundo
 function compare() {
@@ -277,12 +243,14 @@ function compare() {
             openCard = 0;
         } else {
             // si no son iguales, las volvemos a cerrar y aplicamos efectos
-            shaking(card1, card2);
+            shaking(card1, card2)
         }
     }
 }
 
+
 function shaking(card1, card2) {
+
     if (
         !card1.classList.contains("match") &&
         !card2.classList.contains("match")
@@ -306,11 +274,13 @@ function shaking(card1, card2) {
     }
 }
 
+
 //Seleccionar los botones del Ranking
 const moveRankingLevels = document.querySelectorAll(".moveRankingLevels");
 for (const moveRankingLevel of moveRankingLevels) {
     moveRankingLevel.addEventListener("click", changeRankingLevel);
 }
+
 
 //Lista de usuarios y sus puntos.
 //Comprobar si existen los arrays de usuarios y puntos en localStorage. si no existen, crearlos y guardarlos en localStorage; si existen, cogerlos de localStorage
@@ -340,24 +310,26 @@ function getRankingLevelLists() {
     } else {
         rankingLevel3 = JSON.parse(localStorage.getItem("rankingLevel3")); //cogemos el array de localStorage
     }
+
 }
 getRankingLevelLists();
+
 
 //Objeto con el rankingLevel y la lista de usuarios y sus puntos
 const object = {
     l1: {
         rankingLevel: "Level 1",
-        lista: rankingLevel1,
+        lista: rankingLevel1
     },
     l2: {
         rankingLevel: "Level 2",
-        lista: rankingLevel2,
+        lista: rankingLevel2
     },
     l3: {
         rankingLevel: "Level 3",
-        lista: rankingLevel3,
-    },
-};
+        lista: rankingLevel3
+    }
+}
 
 //Funcion para añadir un array de usuarios y sus puntos
 let gameUser, gameTries;
@@ -440,7 +412,7 @@ function showRanking(property, arrayList, arrayIcons) {
     const fragment = document.createDocumentFragment(); //crear un fragment
     const ol = document.querySelector("ol"); //crear una variable  para seleccionar la ol
     ol.innerHTML = ""; //limpiar la ol
-    //recorrer el array y crear un li para cada elemento
+    //recorrer el array y crear un li para cada elemento 
     for (let i = 0; i < 5; i++) {
         const li = document.createElement("li"); //Creo un li
         li.classList.add("person"); //Añado la class "person"
@@ -507,32 +479,40 @@ const changePlayer = document.querySelector(".changePlayer");
 changePlayer.addEventListener("click", changePlayerName);
 
 function changePlayerName() {
-    reset();
+    reset(); 
     header.classList.remove("form_hide");
     main.classList.add("main_hide");
+    
 }
 
+
+
 // EXPORTAR A OTRO ARCHIVO JS
+
+
 
 // Funcion para colocar el nombre del jugador en el titulo del juego
 function printNameTitle(nombre) {
     nameTitle.textContent = `Find The Partners ${nombre}`;
 }
 
+
 //Funcion que controla el inicio del juego
 let nombre;
 document.addEventListener("keydown", (e) => {
     console.log(e);
-    nombre = input.value.toUpperCase();
-
+    nombre = input.value.toUpperCase()
+    
     printNameTitle(nombre);
-
+    
     // Posibles validaciones
     if (isNaN(nombre) && nombre.length <= 6) {
+        
         if (e.code === "Enter" && nombre) {
-            header.classList.add("form_hide");
-            main.classList.remove("main_hide");
-            nombre = " ";
+            header.classList.add("form_hide")
+            main.classList.remove("main_hide")
+            nombre = " "
         }
     }
+
 });
