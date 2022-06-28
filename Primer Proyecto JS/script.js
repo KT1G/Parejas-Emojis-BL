@@ -17,9 +17,9 @@ let span = document.querySelector("span");
 let usersPoints = []
 let names = []
 
-const level1 = 1
+/* const level1 = 1
 const level2 = 2
-const level3 = 3
+const level3 = 3 */
 
 
 //Numero de intentos
@@ -60,7 +60,9 @@ const input = document.querySelector("input")
 const header = document.querySelector("header")
 
 //seleccionamos el "h2 del Game"
-const nameTitle = document.querySelector(".insert_name");
+let nameTitle = document.querySelector(".insert_name");
+
+
 
 //Seleccionamos el ranking
 const ranking = document.querySelector("ol")
@@ -76,59 +78,53 @@ const boton3 = document.querySelector(".l3")
 //Funcion que segun el boton elige un array de emojis y rediseña la cuadricula y los stilos de los botones
 function selectArrayEmojis() {
 
-    boton1.classList.add("l1");
 
     if (this.classList.contains("l1")) {
         arr = arr1;
-        // igualando los tries y las openCard a 0, impedimos que al pulsar una sola carta y cambiar de nivel se bloqué el juego
-        reset()
+        
+
+        boton1.classList.add("marked");
+        boton2.classList.remove("marked");
+        boton3.classList.remove("marked");
 
         boton2.style.cssText ="bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
         boton3.style.cssText ="bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
 
-        ranking.innerHTML = `<h2>RANKING</h2>`;
-        printRanking(ordenarRanking(level1));
     }
     if (this.classList.contains("l2")) {
         arr = arr2;
-        // igualando los tries y las openCard a 0  impedimos que al pulsar una sola carta y cambiar de nivel se bloqué el juego
-        reset()
+        
+        
+        boton1.classList.remove("marked");
+        boton2.classList.add("marked");
+        boton3.classList.remove("marked");
 
-        boton1.classList.remove("l1")
 
         boton1.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
         boton3.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
 
-        this.style.background = "#FFFFFF";
-        this.style.color = "black";
-
-        ranking.innerHTML = `<h2>RANKING</h2>`;
-        printRanking(ordenarRanking(level2));
-
     }
     if (this.classList.contains("l3")) {
         arr = arr3;
-        // igualando los tries y las openCard a 0  impedimos que al pulsar una sola carta y cambiar de nivel se bloqué el juego
-        reset()
+        
+        
+        boton1.classList.remove("marked");
+        boton2.classList.remove("marked");
+        boton3.classList.add("marked");
 
-        boton1.classList.remove("l1");
 
-        boton1.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton2.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton1.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton2.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
 
-        this.style.background = "#FFFFFF";
-        this.style.color = "black";
-
-        ranking.innerHTML = `<h2>RANKING</h2>`;
-        printRanking(ordenarRanking(level3));
     }
     return redesign(arr);
 }
 
+
+
 //Funcion Rediseño segun nivel
 function redesign(array) {
+    openCard = 0;
     const column = array.length / 4;
     ul.innerHTML = "";
     ul.removeAttribute("style");
@@ -140,9 +136,8 @@ function redesign(array) {
     selectFlip();
     attempts();
     compare();
-
-
 }
+
 
 
 //Crear las cartas
@@ -164,6 +159,7 @@ function create(array) {
 create(arr);
 
 
+
 //Desodenar arr e introducir el valor de cada posicion en cada div de class back
 function shuffle(array) {
     back = document.querySelectorAll(".back");
@@ -175,6 +171,7 @@ function shuffle(array) {
 }
 
 
+
 //Seleccionar los li .card y añadirles un evento click
 function selectFlip() {
     for (const card of cards) {
@@ -182,6 +179,7 @@ function selectFlip() {
     }
 }
 selectFlip();
+
 
 
 //Al hacer click se llama a la funcion flipCard, se añade la clase flipped
@@ -199,50 +197,47 @@ function flipCard() {
         }
 
     }
+    if (cards.length === document.querySelectorAll(".match").length) {
+        addUser();
+        //seleccionar el class="insert_name" y cambiarlo por una frase con el nombre del usuario y  ¡Has ganado!
+        const title = nameTitle.innerHTML;
+        nameTitle.innerHTML = `¡Has ganado!`;
+        setTimeout(() => {
+            nameTitle.innerHTML = title;
+        }, 5000);
+    }
 }
+
 
 
 //si hay dos cartas seleccionadas se comprueba si son iguales, si lo son solo se les quita la clase selected y sino se les quita la clase flipped y se le quita la clase selected al cabo de 1 segundo
 function compare() {
-
     const li = document.querySelectorAll("li");
-    const arrli = [...li];
-
+    const arrli = [...li]; // seleccionamos todas las cartas que tengan la clase "selected"
     const selected = arrli.filter((el) => {
         if (el.classList.contains("flipped") && !el.classList.contains("match")) {
             return el;
-        }
-    }); // filtramos las cartas que tengan la clase "flipped"
-
+        }}); // filtramos las cartas que tengan la clase "selected"
     const card1 = selected[0]; // seleccionamos la primera carta
     const card2 = selected[1]; // seleccionamos la segunda carta
     if (selected.length === 2) {
         tries++;
         span.innerHTML = tries;
         // comprobamos que haya dos cartas seleccionadas
-
         if (card1.textContent === card2.textContent) {
             // comprobamos que las dos cartas seleccionadas sean iguales
             card1.classList.add("match"); // si son iguales las ponemos como pareja
             card2.classList.add("match");
-
-            setTimeout(() => {
+            /* setTimeout(() => {
                 card1.classList.add("point");
                 card2.classList.add("point");
-            }, 200);
-
+            }, 200); */
             openCard = 0;
-
-
         } else {
             // si no son iguales, las volvemos a cerrar y aplicamos efectos
             shaking(card1, card2)
-
         }
-
     }
-    addPoints()
-
 }
 
 
@@ -271,33 +266,45 @@ function shaking(card1, card2) {
     }
 }
 
-//Boton barajar de nuevo y reiniciar el juego
-const button = document.querySelector(".reset");
-button.addEventListener("click", reset);;
 
-function reset() {
-    tries = 0;
-    openCard = 0;
-    span.innerHTML = tries;
-    for (const card of cards) {
-        card.className = "card";
-    }
-    setTimeout(() => {
-        shuffle(arr);
-    }, 500);
-}
-reset();
-
-/* //Seleccionar los botones del Ranking
+//Seleccionar los botones del Ranking
 const moveRankingLevels = document.querySelectorAll(".moveRankingLevels");
 for (const moveRankingLevel of moveRankingLevels) {
     moveRankingLevel.addEventListener("click", changeRankingLevel);
 }
 
-//Lista de usuarios y sus puntos
-const rankingLevel1 = [["Person 1", 15], ["Person 2", 18], ["Person 3", 8], ["Person 4", 10], ["Person 5", 12]];
-const rankingLevel2 = [["Person 1", 17], ["Person 2", 20], ["Person 3", 10], ["Person 4", 12], ["Person 5", 14]];
-const rankingLevel3 = [["Person 1", 19], ["Person 2", 22], ["Person 3", 12], ["Person 4", 14], ["Person 5", 16]];
+
+//Lista de usuarios y sus puntos.
+//Comprobar si existen los arrays de usuarios y puntos en localStorage. si no existen, crearlos y guardarlos en localStorage; si existen, cogerlos de localStorage
+let rankingLevel1, rankingLevel2, rankingLevel3;
+function getRankingLevelLists() {
+    //rankingLevel1
+    if (localStorage.getItem("rankingLevel1") === null) {
+        rankingLevel1 = [];
+        localStorage.setItem("rankingLevel1", JSON.stringify(rankingLevel1));//guardamos el array en localStorage
+    } else {
+        rankingLevel1 = JSON.parse(localStorage.getItem("rankingLevel1"));//cogemos el array de localStorage
+    }
+
+    //rankingLevel2
+    if (localStorage.getItem("rankingLevel2") === null) {
+        rankingLevel2 = [];
+        localStorage.setItem("rankingLevel2", JSON.stringify(rankingLevel2));//guardamos el array en localStorage
+    } else {
+        rankingLevel2 = JSON.parse(localStorage.getItem("rankingLevel2"));//cogemos el array de localStorage
+    }
+
+    //rankingLevel3
+    if (localStorage.getItem("rankingLevel3") === null) {
+        rankingLevel3 = [];
+        localStorage.setItem("rankingLevel3", JSON.stringify(rankingLevel3));//guardamos el array en localStorage
+    } else {
+        rankingLevel3 = JSON.parse(localStorage.getItem("rankingLevel3"));//cogemos el array de localStorage
+    }
+    
+}
+getRankingLevelLists();
+
 
 //Objeto con el rankingLevel y la lista de usuarios y sus puntos
 const object = {
@@ -315,49 +322,115 @@ const object = {
     }
 }
 
-//Propiedad del objeto
-let level = "l1";
- */
-/* //Comprobar si hay un perfect
-let perfect = "";
-function comparePerfect(arrayList,arrayIcons) {
-    perfect = "";
-    for (let i = 0; i < arrayList.length; i++) {
-        if (arrayList[i][1] === arrayIcons.length / 2) {
-            return perfect = "Pleno";
+//Funcion para añadir un array de usuarios y sus puntos
+let gameUser, gameTries;
+function addUser() {
+    //Comprobar que todas las cartas tengan la clase "match"
+    if (cards.length === document.querySelectorAll(".match").length) {
+        //Conseguir el nombre del usuario
+        gameUser = document.querySelector("input").value.toUpperCase();
+        console.log(gameUser);
+        //Conseguir el numero de tries
+        gameTries = tries;
+        //Comprobar el gameLevel
+        if (arr.length === arr1.length) {
+            //Coger la lista del localStorage
+            rankingLevel1 = JSON.parse(localStorage.getItem("rankingLevel1"));
+            //Añadir el usuario y sus puntos a la lista
+            checkUser(gameUser, rankingLevel1);
+            //Ordenar la lista
+            orderArray(rankingLevel1);
+            //Guardar la lista en el localStorage
+            localStorage.setItem("rankingLevel1", JSON.stringify(rankingLevel1));
+            //Mostrar el ranking
+            showRanking(object.l1, rankingLevel1, arr1);
         }
-        else {
-            perfect = "";
+        else if (arr.length === arr2.length) {
+            //Coger la lista del localStorage
+            rankingLevel2 = JSON.parse(localStorage.getItem("rankingLevel2"));
+            //Añadir el usuario y sus puntos a la lista
+            checkUser(gameUser, rankingLevel2);
+            //Ordenar la lista
+            orderArray(rankingLevel2);
+            //Guardar la lista en el localStorage
+            localStorage.setItem("rankingLevel2", JSON.stringify(rankingLevel2));
+            showRanking(object.l2, rankingLevel2, arr2);
         }
-        
+        else if (arr.length === arr3.length) {
+            //Coger la lista del localStorage
+            rankingLevel3 = JSON.parse(localStorage.getItem("rankingLevel3"));
+            //Añadir el usuario y sus puntos a la lista
+            checkUser(gameUser, rankingLevel3);
+            //Ordenar la lista
+            orderArray(rankingLevel3);
+            //Guardar la lista en el localStorage
+            localStorage.setItem("rankingLevel3", JSON.stringify(rankingLevel3));
+            showRanking(object.l3, rankingLevel3, arr3);
+        }
+    }
+    else {
+        alert("No has terminado el juego");
     }
 }
-comparePerfect(rankingLevel1,arr1) */
 
-//Mostrar por defecto el rankingLevel1
-/* function showRanking(property, arrayList, arrayIcons) {
-    //let perfect = "";
+//Funcion para comprobar si el usuario esta en la lista
+function checkUser(user, array) {
+    if (array.length === 0) {
+        array.push([user, gameTries]);
+    }
+    else {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i][0] === user) {
+                console.log("El usuario ya existe");
+                if (array[i][1] > gameTries) {
+                    array[i][1] = gameTries;
+                    break;
+                }
+            }
+            else {
+                array.push([user, gameTries]);
+                break;
+            }
+        }
+    }
+}
+
+//Ordenar la lista de usuarios y sus puntos de menor a mayor
+function orderArray(array) {
+    array.sort((a, b) => a[1] - b[1]);
+}
+
+//Mostrar el Ranking, por defecto el rankingLevel1
+function showRanking(property, arrayList, arrayIcons) {
     let ranking = property.rankingLevel;//declaro variable ranking, su valor es igual al de la clave rankingLevel del objeto l1
     document.querySelector("h3").innerHTML = ranking;//meter el valor de ranking en el h3 de DOM
     const fragment = document.createDocumentFragment();//crear un fragment
     const ol = document.querySelector("ol");//crear una variable  para seleccionar la ol
     ol.innerHTML = "";//limpiar la ol
-    arrayList.sort((a, b) => a[1] - b[1]);//ordenar los elementos del array por orden de menor a mayor
     //recorrer el array y crear un li para cada elemento 
     for (let i = 0; i < 5; i++) {
         const li = document.createElement("li");        //Creo un li
         li.classList.add("person");                     //Añado la class "person"
-        li.innerHTML = `${arrayList[i][0]} - ${arrayList[i][1]}`;//meto en el li el valor de cada elemento del array
-        if (arrayList[i][1] === arrayIcons.length / 2) {
-            li.innerHTML += " Pleno";
+        if (arrayList[i]){
+            li.innerHTML = `${arrayList[i][0]} - ${arrayList[i][1]}`;//meto en el li el valor de cada elemento del array
+        }
+        else {
+            li.innerHTML = "Vacio";
+        }
+
+        //Comprobar si el usuario hizo todas las parejas en el menor numero de intentos posible
+        if (arrayList[i] && arrayList[i][1] === arrayIcons.length / 2) {
+            li.innerHTML += ' "PLENO"';
+            li.classList.add("perfect");
         }
         fragment.append(li);                            //Añado el li al fragment
     }
     ol.append(fragment);                                //Añado el fragment al ol
 }
-showRanking(object.l1, rankingLevel1, arr1); */
+showRanking(object.l1, rankingLevel1, arr1);
 
-/* //Funcion para mostrar cada ranking segun el nivel seleccionado
+//Funcion para mostrar cada ranking segun el nivel seleccionado
+let level = "l1";
 function changeRankingLevel() {
     if (this.classList.contains("right")) {
         if (level === "l1") {
@@ -380,7 +453,37 @@ function changeRankingLevel() {
         }
     }
 }
- */
+
+//BOTONES DEL FOOTER
+//Boton barajar de nuevo y reiniciar el juego
+const button = document.querySelector(".reset");
+button.addEventListener("click", reset);
+function reset() {
+    tries = 0;
+    openCard = 0;
+    span.innerHTML = tries;
+    for (const card of cards) {
+        card.className = "card";
+    }
+    setTimeout(() => {
+        shuffle(arr);
+    }, 500);
+}
+reset();
+
+//Volver a introducir el nombre del usuario en el input
+const changePlayer = document.querySelector(".changePlayer");
+changePlayer.addEventListener("click", changePlayerName);
+function changePlayerName() {
+    const newName = prompt("Introduce tu nombre").toUpperCase();
+    //mostrar el nombre del usuario en el input
+    nombre = newName;
+    //cambiar el nombre del usuario en el input
+    document.querySelector("input").value = newName;
+    printNameTitle(nombre);
+    reset();
+}
+
 
 
 // EXPORTAR A OTRO ARCHIVO JS
@@ -388,211 +491,28 @@ function changeRankingLevel() {
 
 
 // Funcion para colocar el nombre del jugador en el titulo del juego
-function printNameTitle(name) {
-    nameTitle.textContent = `Find The Partners ${name}`;
+function printNameTitle(nombre) {
+    nameTitle.textContent = `Find The Partners ${nombre}`;
 }
 
-//Funcion que controla el inicio del juego y nos guarda el nombre en un localStorage junto con un nuevo usuario el cual tiene el nombre introducido mas los puntos segun el nivel seleccionado
 
-
+//Funcion que controla el inicio del juego y nos guarda el nombre en un localStorage
+let nombre;
 document.addEventListener("keydown", (e) => {
-
-    let name = input.value.toUpperCase()
-
-    printNameTitle(name);
-
+    console.log(e);
+    nombre = input.value.toUpperCase()
+    let names = []
+    
+    printNameTitle(nombre);
+    
     // Posibles validaciones
-    if (isNaN(name) && name.length <= 6) {
-
-        if (e.code === "Enter" && name) {
-
-            if (!JSON.parse(localStorage.getItem("names"))) {
-
-                localStorage.setItem("names", JSON.stringify(names));
-            }
-            if (!JSON.parse(localStorage.getItem("users"))) {
-                localStorage.setItem("users", JSON.stringify(usersPoints));
-            }
-
-            names = JSON.parse(localStorage.getItem("names"));
-            usersPoints = JSON.parse(localStorage.getItem("users"));
-
-            if (!names.includes(name)) {
-                names.push(name)
-                usersPoints.push({
-                    user: name,
-                    points: [{
-                            scoreLevel1: 0,
-                        },
-                        {
-                            scoreLevel2: 0,
-                        },
-                        {
-                            scoreLevel3: 0,
-                        },
-                    ],
-                })
-
-            }
-
-            localStorage.setItem("users", JSON.stringify(usersPoints));
-            localStorage.setItem("names", JSON.stringify(names));
+    if (isNaN(nombre) && nombre.length <= 6) {
+        
+        if (e.code === "Enter" && nombre) {
             header.classList.add("form_hide")
             main.classList.remove("main_hide")
-
-            if (ranking.classList.contains("l1")) {
-                printRanking(ordenarRanking(level1));
-                ranking.classList.remove("l1")
-            }
-
-        }
+        } 
     }
 
 });
 
-//funcion para guardar en el local Storage los puntos segun el nivel (llamada linea 189)
-function addPoints() {
-
-    const li = document.querySelectorAll("li");
-    const arrli = [...li];
-
-    const matches = arrli.filter((el) => {
-        if (el.classList.contains("match")) {
-            return el;
-        }
-    });
-
-    if (matches.length === 16 || matches.length === 20 || matches.length === 24) {
-
-        let name = input.value.toUpperCase();
-        usersPoints = JSON.parse(localStorage.getItem("users"));
-        const player = usersPoints.find((n) => n.user === name);
-        const playerScoreLevel1 = player.points[0].scoreLevel1;
-        const playerSoreLevel2 = player.points[1].scoreLevel2
-        const playerSoreLevel3 = player.points[2].scoreLevel3;
-
-        if (playerScoreLevel1 > tries || playerScoreLevel1 === 0) {
-            if (cards.length === 16) {
-
-                player.points[0] = {
-                    scoreLevel1: tries,
-                };
-            }
-        }
-        if (playerSoreLevel2 > tries || playerSoreLevel2 === 0) {
-            if (cards.length === 20) {
-
-                player.points[1] = {
-                    scoreLevel2: tries,
-                };
-            }
-        }
-        if (playerSoreLevel3 > tries || playerSoreLevel3 === 0) {
-            if (cards.length === 20) {
-
-                player.points[2] = {
-                    scoreLevel3: tries,
-                };
-            }
-        }
-        localStorage.setItem("users", JSON.stringify(usersPoints));
-
-
-        console.log(tries)
-    }
-
-}
-
-
-
-
-
-function ordenarRanking(nivel) {
-    usersPoints = JSON.parse(localStorage.getItem("users"));
-
-    if (nivel === level1) {
-
-        const rankLevel1 = usersPoints
-            .map((p) => ({
-                user: p.user,
-                points: p.points[0].scoreLevel1,
-            }))
-            .sort((a, b) => a.points - b.points);
-
-        return rankLevel1
-
-    } else if (nivel === level2) {
-        const rankLevel2 = usersPoints
-            .map((p) => ({
-                user: p.user,
-                points: p.points[1].scoreLevel2,
-            }))
-            .sort((a, b) => b.points - a.points);
-
-        return rankLevel2;
-
-    } else if (nivel === level3) {
-        const rankLevel3 = usersPoints
-            .map((p) => ({
-                user: p.user,
-                points: p.points[2].scoreLevel3,
-            }))
-            .sort((a, b) => b.points - a.points);
-
-        return rankLevel3;
-
-
-    }
-
-
-
-}
-
-
-function printRanking(rank) {
-    console.log(rank)
-
-    const fragment = document.createDocumentFragment();
-    for (const el of rank) {
-
-        if (el.points !== 0) {
-            const li = document.createElement("li");
-            li.innerHTML = `${el.user} : ${el.points} Tries `;
-            fragment.append(li);
-        }
-    }
-    ranking.append(fragment);
-
-}
-
-
-
-
-
-
-// EN CASO DE QUERER HACERLO PULSANDO UN BOTON
-/* 
-    butonInput.addEventListener("click", () => {
-
-        let names = []
-        let name = input.value
-        
-        if (!JSON.parse(localStorage.getItem("names"))) {
-
-        localStorage.setItem("names", JSON.stringify(names));
-    }
-
-    names = JSON.parse(localStorage.getItem("names"));
-
-    if (!names.includes(name)) {
-        names.push(name)
-    }
-
-    localStorage.setItem("names", JSON.stringify(names));
-
-
-
-    header.classList.add("form_hide");
-    main.classList.remove("main_hide");
-
-}); */
