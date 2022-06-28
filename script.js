@@ -17,9 +17,7 @@ let span = document.querySelector("span");
 let usersPoints = [];
 let names = [];
 
-/* const level1 = 1
-const level2 = 2
-const level3 = 3 */
+
 
 //Numero de intentos
 function attempts() {
