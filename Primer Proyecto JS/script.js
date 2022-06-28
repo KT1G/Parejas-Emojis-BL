@@ -228,10 +228,10 @@ function compare() {
             // comprobamos que las dos cartas seleccionadas sean iguales
             card1.classList.add("match"); // si son iguales las ponemos como pareja
             card2.classList.add("match");
-            /* setTimeout(() => {
+            setTimeout(() => {
                 card1.classList.add("point");
                 card2.classList.add("point");
-            }, 200); */
+            }, 200);
             openCard = 0;
         } else {
             // si no son iguales, las volvemos a cerrar y aplicamos efectos
