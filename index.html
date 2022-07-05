@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de Cartas</title>
     <link rel="stylesheet" href="style.css">
-
-
+    
 </head>
 
 <body>
     <header>
         <h1>Type Name to Start</h1>
         <div class="inputBox">
-            <input type="text" id="user" name="user" required placeholder="NICKNAME ">
+            <input type="text" id="user" name="user" required placeholder="PLAYER NAME">
+            <button class="introName"><img src="../Parejas-Emojis-BL/img/arrowRight.svg" alt="arrowRight"></button>
         </div>
 
     </header>
@@ -23,12 +23,15 @@
 
         <section class="container">
 
-            <h2 class="insert_name">Find The Partner</h2>
+            <h2 class="countdown">
+                <span id="textCountdown" class="size">Countdown: <span id="numCountdown"></span> </span>
+                <span id="textLucky" class="size">Good luck!!!</span>
+                <span id="textWin" class="size">Congratulatios!!!</span>
+            </h2>
             <div class="background">
-                <ul class="game">
-
-                </ul>
+                <ul id="card_container" class="game"></ul>
             </div>
+
         </section>
 
         <aside class="container_ranking">
@@ -49,7 +52,7 @@
                     <h3></h3>
                     <button class="moveRankingLevels right"><img src="./img/arrowRight.svg" alt="arrowRight"></button>
                 </menu>
-                <ol class="ranking l1">
+                <ol class="ranking">
                     <h2>RANKING</h2>
 
                 </ol>
@@ -58,19 +61,21 @@
             
             <footer class="fButoms">
                 <menu class="butoms">
-                    <button class="reset">Reset</button>
-                    <button class="reset changePlayer">Player</button>
+                    <button class="redButoms reset">Reset</button>
+                    <button class="redButoms changePlayer">Player</button>
                 </menu>
             </footer>
-            
-            <h2 id="tries">TRIES: <span> </span> </h2>
+            <ul class="dataFooter">
+                <li class="data insert_name"></li>
+                <li class="data tries">TRIES: <span class="numTries"> </span></li>
+            </ul>
             
         </aside>
 
     </main>
 
 
-    <script  src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
