@@ -213,16 +213,6 @@ button {
     box-shadow: 10px 10px 5px -7px rgba(0, 0, 0, 0.2);
 }
 
-
-button:hover {
-    background: #c0c0c0;
-    color: #070808;
-}
-
-button:hover img{
-    fill: #070808;
-}
-
 .ranking {
     display: flex;
     width: 100%;
