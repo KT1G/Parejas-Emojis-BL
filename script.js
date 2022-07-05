@@ -12,18 +12,15 @@ const arr3 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "�
 
 let arr = arr1;
 let tries;
-let span = document.querySelector("span");
-//variables del local storage
-let usersPoints = [];
-let names = [];
-
+let spanTries = document.querySelector(".numTries");
+let contdown = document.querySelector(".countdown");
 
 
 //Numero de intentos
 function attempts() {
-    span = document.querySelector("span");
+    spanTries = document.querySelector(".numTries");
     tries = 0;
-    span.innerHTML = tries;
+    spanTries.innerHTML = tries;
 }
 attempts();
 
@@ -54,8 +51,10 @@ const input = document.querySelector("input");
 //seleccionamos el header
 const header = document.querySelector("header");
 
-//seleccionamos el "h2 del Game"
-let nameTitle = document.querySelector(".insert_name");
+//seleccionamos el "li" donde va a ir el nombre del jugador
+const li = document.querySelector(".insert_name");
+let gameUser = document.querySelector("input").value;
+li.innerHTML = gameUser;
 
 //Seleccionamos el ranking
 const ranking = document.querySelector("ol");
@@ -64,6 +63,58 @@ const ranking = document.querySelector("ol");
 const boton1 = document.querySelector(".l1");
 const boton2 = document.querySelector(".l2");
 const boton3 = document.querySelector(".l3");
+
+
+//FUNCION PARA AÑADIR TEXTO AL TITULO
+
+//Seleccionar el textoCountdown
+const textCountdown = document.querySelector("#textCountdown");
+let time;
+//Seleccionar el numCountdown
+const numCountdown = document.querySelector("#numCountdown");
+numCountdown.innerHTML = time;
+
+//Seleccionar el textLucky
+const textLucky = document.querySelector("#textLucky");
+textLucky.style.fontSize = 0;
+
+//Seleccionar el textWin
+const textWin = document.querySelector("#textWin");
+textWin.style.fontSize = 0;
+    
+function textTitle() {
+    //Añadirle a todas las cartas la clase "flipped" para poder memorizarlas y mostrar el contenido de textCountdown
+    for (const card of cards) {
+        card.classList.add("flipped");
+    }
+    time = 10;
+    textLucky.style.fontSize = 0;
+    textWin.style.fontSize = 0;
+    //Intervalo para que se muestren las cartas
+    let interval = setInterval(() => {
+                                      //Tiempo de espera
+        time--;                                 //Decremento del tiempo
+          //Cambio el tamaño del texto
+        numCountdown.innerHTML = time;          //Cambio el contenido del numCountdown
+        if (time === 0) {
+            //parar el conteo atras
+            clearInterval(interval);
+            time = 10;
+            //ocultar el textoCountdown
+            textCountdown.style.fontSize = 0;
+            //mostrar el textoLucky
+            textLucky.removeAttribute("style");
+            //quitarle la clase "flipped" a todas las cartas
+            for (const card of cards) {
+                card.classList.remove("flipped");
+                
+            }
+            return;
+        }
+    }, 1000);
+
+}
+
 
 //Funcion que segun el boton elige un array de emojis y rediseña la cuadricula y los stilos de los botones
 function selectArrayEmojis() {
@@ -103,6 +154,8 @@ function selectArrayEmojis() {
         boton2.style.cssText =
             "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
     }
+    textCountdown.removeAttribute("style");
+    textCountdown.classList.add("size");
     return redesign(arr);
 }
 
@@ -147,6 +200,7 @@ function shuffle(array) {
     for (let i = 0; i < nums.length; i++) {
         back[i].innerHTML = nums[i];
     }
+    textTitle();
     console.log(nums);
 }
 
@@ -171,21 +225,21 @@ function flipCard() {
     }
     if (cards.length === document.querySelectorAll(".match").length) {
         addUser();
-        const matches = document.querySelectorAll(".match")
-        //seleccionar el class="insert_name" y cambiarlo por una frase con el nombre del usuario y  ¡Has ganado!
-        const title = nameTitle.innerHTML;
-        nameTitle.innerHTML = `¡Has ganado!`;
-        matches.forEach(el => {
+        textWin.removeAttribute("style");
+        textLucky.style.fontSize = 0;
+        //Añadir la clase win a todas las cartas y hacer una animacion durante 3 segundos
+        for (const card of cards) {
+            card.classList.add("win");
             setTimeout(() => {
-                el.classList.add("win");;
-            }, 300);
-
-        })
-
+                card.classList.remove("win");
+            }, 3000);
+        }
+        //Sacar la clase win a todas las cartas
         setTimeout(() => {
-            nameTitle.innerHTML = title;
-            reset()
-        }, 1000);
+            for (const card of cards) {
+                card.classList.remove("win");
+            }
+        }, 3000);
     }
 }
 
@@ -202,7 +256,7 @@ function compare() {
     const card2 = selected[1]; // seleccionamos la segunda carta
     if (selected.length === 2) {
         tries++;
-        span.innerHTML = tries;
+        spanTries.innerHTML = tries;
         // comprobamos que haya dos cartas seleccionadas
         if (card1.textContent === card2.textContent) {
             // comprobamos que las dos cartas seleccionadas sean iguales
@@ -297,15 +351,13 @@ const object = {
     },
 };
 
+
 //Funcion para añadir un array de usuarios y sus puntos
-let gameUser, gameTries;
+let gameTries;
 
 function addUser() {
     //Comprobar que todas las cartas tengan la clase "match"
     if (cards.length === document.querySelectorAll(".match").length) {
-        /* //Conseguir el nombre del usuario
-            gameUser = nombre;
-            console.log(gameUser); */
         //Conseguir el numero de tries
         gameTries = tries;
         //Comprobar el gameLevel
@@ -349,8 +401,10 @@ function addUser() {
 //Funcion para comprobar si el usuario esta en la lista
 function checkUser(user, array) {
     if (array.length === 0) {
+        console.log("El usuario no esta en la lista");
         array.push([user, gameTries]);
-    } else {
+    }
+    else {
         //Comprobar si el usuario esta en la lista
         for (let i = 0; i < array.length; i++) {
             if (array[i][0] === user) {
@@ -358,11 +412,14 @@ function checkUser(user, array) {
                 console.log("El usuario esta en la lista");
                 if (array[i][1] > gameTries) {
                     array[i][1] = gameTries;
+                    console.log("Mejoró la puntuación");
+                    break;
                 }
-                return;
+                return console.log("No mejoró la puntuacion");
             }
         }
         //Si no esta en la lista añadir el usuario y sus puntos
+        console.log("El usuario no esta en la lista");
         array.push([user, gameTries]);
     }
 }
@@ -431,7 +488,10 @@ button.addEventListener("click", reset);
 function reset() {
     tries = 0;
     openCard = 0;
-    span.innerHTML = tries;
+    spanTries.innerHTML = tries;
+    textCountdown.removeAttribute("style");
+    textLucky.style.fontSize = 0;
+    textWin.style.fontSize = 0;
     for (const card of cards) {
         card.className = "card";
     }
@@ -441,6 +501,7 @@ function reset() {
 }
 reset();
 
+
 //Volver a introducir el nombre del usuario en el input
 const changePlayer = document.querySelector(".changePlayer");
 changePlayer.addEventListener("click", changePlayerName);
@@ -449,32 +510,23 @@ function changePlayerName() {
     gameUser = prompt("Introduce tu nombre").toUpperCase();
     //cambiar el nombre del usuario en el input
     document.querySelector("input").value = gameUser;
-    printNameTitle(gameUser);
+    li.innerHTML = gameUser;
+    textLucky.style.fontSize = 0;
+    textWin.style.fontSize = 0;
     reset();
 }
 
 // EXPORTAR A OTRO ARCHIVO JS
 
-//funcion para cambiar el nombre del usuario en el input y guardarlo en gameUser
+// Funcion para mostrar el nombre del jugador
+const introName = document.querySelector(".introName");     //Selecciono el boton de introducir el nombre
+introName.addEventListener("click", introNameGame);         //Añado un evento click al boton
 
-// Funcion para colocar el nombre del jugador en el titulo del juego
-function printNameTitle(nombre) {
-    nameTitle.textContent = `Find The Partners ${nombre}`;
-}
-
-//Funcion con ey down que controla el inicio del juego y nos guarda el nombre en un localStorage
-
-document.addEventListener("keydown", (e) => {
-    console.log(e);
+function introNameGame() {
     gameUser = input.value.toUpperCase();
-
-    printNameTitle(gameUser);
-
-    // Posibles validaciones
-    if (isNaN(gameUser) && gameUser.length <= 6) {
-        if (e.code === "Enter" && gameUser) {
-            header.classList.add("form_hide");
-            main.classList.remove("main_hide");
-        }
+    li.innerHTML = gameUser;
+    if (isNaN(gameUser) && gameUser.length <= 10) {
+        header.classList.add("form_hide");
+        main.classList.remove("main_hide");
     }
-});
+}
