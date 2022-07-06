@@ -365,7 +365,7 @@ const object = {
 
 //Funcion para añadir un array de usuarios y sus puntos
 let gameTries;
-
+let level = "l1";
 function addUser() {
     //Comprobar que todas las cartas tengan la clase "match"
     if (cards.length === document.querySelectorAll(".match").length) {
@@ -383,6 +383,7 @@ function addUser() {
             localStorage.setItem("rankingLevel1", JSON.stringify(rankingLevel1));
             //Mostrar el ranking
             showRanking(object.l1, rankingLevel1, arr1);
+            level = "l1";
         } else if (arr.length === arr2.length) {
             //Coger la lista del localStorage
             rankingLevel2 = JSON.parse(localStorage.getItem("rankingLevel2"));
@@ -393,6 +394,7 @@ function addUser() {
             //Guardar la lista en el localStorage
             localStorage.setItem("rankingLevel2", JSON.stringify(rankingLevel2));
             showRanking(object.l2, rankingLevel2, arr2);
+            level = "l2";
         } else if (arr.length === arr3.length) {
             //Coger la lista del localStorage
             rankingLevel3 = JSON.parse(localStorage.getItem("rankingLevel3"));
@@ -403,6 +405,7 @@ function addUser() {
             //Guardar la lista en el localStorage
             localStorage.setItem("rankingLevel3", JSON.stringify(rankingLevel3));
             showRanking(object.l3, rankingLevel3, arr3);
+            level = "l3";
         }
     } else {
         alert("No has terminado el juego");
@@ -468,7 +471,6 @@ function showRanking(property, arrayList, arrayIcons) {
 showRanking(object.l1, rankingLevel1, arr1);
 
 //Funcion para mostrar cada ranking segun el nivel seleccionado
-let level = "l1";
 
 function changeRankingLevel() {
     if (this.classList.contains("right")) {
@@ -492,7 +494,7 @@ function changeRankingLevel() {
 
 //BOTONES DEL FOOTER
 //Boton barajar de nuevo y reiniciar el juego
-const button = document.querySelector(".reset");
+const button = document.querySelector(".replay");
 button.addEventListener("click", reset);
 
 function reset() {
@@ -526,6 +528,29 @@ function changePlayerName() {
     reset();
 }
 
+//Boton para borrar el listado del ranking que se ve
+const deleteRanking = document.querySelector(".deleteRanking");
+deleteRanking.addEventListener("click", deleteRankingList);
+
+function deleteRankingList() {
+    if (level === "l1") {
+        rankingLevel1 = [];
+        localStorage.setItem("rankingLevel1", JSON.stringify(rankingLevel1));
+        showRanking(object.l1, rankingLevel1, arr1);
+    }
+    else if (level === "l2") {
+        rankingLevel2 = [];
+        localStorage.setItem("rankingLevel2", JSON.stringify(rankingLevel2));
+        showRanking(object.l2, rankingLevel2, arr2);
+    }
+    else if (level === "l3") {
+        rankingLevel3 = [];
+        localStorage.setItem("rankingLevel3", JSON.stringify(rankingLevel3));
+        showRanking(object.l3, rankingLevel3, arr3);
+    }
+}
+
+
 // EXPORTAR A OTRO ARCHIVO JS
 
 // Funcion para mostrar el nombre del jugador
@@ -536,7 +561,7 @@ function introNameGame() {
     gameUser = input.value.toUpperCase();
     li.innerHTML = gameUser;
     if (isNaN(gameUser) && gameUser.length <= 10) {
-         textTitle();
+        textTitle();
         header.classList.add("form_hide");
         main.classList.remove("main_hide");
 
