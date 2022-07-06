@@ -14,15 +14,11 @@ let arr = arr1;
 let tries;
 let spanTries = document.querySelector(".numTries");
 let contdown = document.querySelector(".countdown");
+let count = 0
+let start = 0
+let time = 10
 
 
-//Numero de intentos
-function attempts() {
-    spanTries = document.querySelector(".numTries");
-    tries = 0;
-    spanTries.innerHTML = tries;
-}
-attempts();
 
 //Seleccionar todas las cartas
 let cards = document.querySelectorAll(".card");
@@ -69,7 +65,6 @@ const boton3 = document.querySelector(".l3");
 
 //Seleccionar el textoCountdown
 const textCountdown = document.querySelector("#textCountdown");
-let time;
 //Seleccionar el numCountdown
 const numCountdown = document.querySelector("#numCountdown");
 numCountdown.innerHTML = time;
@@ -81,25 +76,38 @@ textLucky.style.fontSize = 0;
 //Seleccionar el textWin
 const textWin = document.querySelector("#textWin");
 textWin.style.fontSize = 0;
-    
+//Numero de intentos
+
+function attempts() {
+    spanTries = document.querySelector(".numTries");
+    tries = 0;
+    spanTries.innerHTML = tries;
+}
+
+
 function textTitle() {
     //Añadirle a todas las cartas la clase "flipped" para poder memorizarlas y mostrar el contenido de textCountdown
+    count++
     for (const card of cards) {
         card.classList.add("flipped");
     }
-    time = 10;
+    time = 10
+    //mostramos el tiempo antes de cambiar
+    numCountdown.innerHTML = time; 
     textLucky.style.fontSize = 0;
     textWin.style.fontSize = 0;
+
     //Intervalo para que se muestren las cartas
     let interval = setInterval(() => {
-                                      //Tiempo de espera
-        time--;                                 //Decremento del tiempo
-          //Cambio el tamaño del texto
-        numCountdown.innerHTML = time;          //Cambio el contenido del numCountdown
+        //Tiempo de espera
+        start++
+        time--; //Decremento del tiempo
+        //Cambio el tamaño del texto
         if (time === 0) {
+            time = 10;
+            count = 0
             //parar el conteo atras
             clearInterval(interval);
-            time = 10;
             //ocultar el textoCountdown
             textCountdown.style.fontSize = 0;
             //mostrar el textoLucky
@@ -107,13 +115,19 @@ function textTitle() {
             //quitarle la clase "flipped" a todas las cartas
             for (const card of cards) {
                 card.classList.remove("flipped");
-                
             }
-            return;
         }
+        numCountdown.innerHTML = time; //Cambio el contenido del numCountdown
     }, 1000);
+    
+    // Condicion para resetear el countdown cuando clicamos en otro nivel, el mismo o el boton de reset
+    if ( count >= 2) {
+        clearInterval(interval);
+        count = 1
+    }
 
 }
+
 
 
 //Funcion que segun el boton elige un array de emojis y rediseña la cuadricula y los stilos de los botones
@@ -125,10 +139,8 @@ function selectArrayEmojis() {
         boton2.classList.remove("marked");
         boton3.classList.remove("marked");
 
-        boton2.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton3.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton2.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton3.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
     }
     if (this.classList.contains("l2")) {
         arr = arr2;
@@ -137,10 +149,8 @@ function selectArrayEmojis() {
         boton2.classList.add("marked");
         boton3.classList.remove("marked");
 
-        boton1.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton3.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton1.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton3.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
     }
     if (this.classList.contains("l3")) {
         arr = arr3;
@@ -149,10 +159,8 @@ function selectArrayEmojis() {
         boton2.classList.remove("marked");
         boton3.classList.add("marked");
 
-        boton1.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
-        boton2.style.cssText =
-            "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton1.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
+        boton2.style.cssText = "bacground:linear-gradient (rgb(35, 86, 255), rgb(0, 85, 165))";
     }
     textCountdown.removeAttribute("style");
     textCountdown.classList.add("size");
@@ -200,7 +208,10 @@ function shuffle(array) {
     for (let i = 0; i < nums.length; i++) {
         back[i].innerHTML = nums[i];
     }
-    textTitle();
+    // condicion que evita que la funcion textTitle se inicia antes de empezar el juego
+    if (start >= 1) {
+        textTitle();
+    }
     console.log(nums);
 }
 
@@ -403,8 +414,7 @@ function checkUser(user, array) {
     if (array.length === 0) {
         console.log("El usuario no esta en la lista");
         array.push([user, gameTries]);
-    }
-    else {
+    } else {
         //Comprobar si el usuario esta en la lista
         for (let i = 0; i < array.length; i++) {
             if (array[i][0] === user) {
@@ -519,14 +529,17 @@ function changePlayerName() {
 // EXPORTAR A OTRO ARCHIVO JS
 
 // Funcion para mostrar el nombre del jugador
-const introName = document.querySelector(".introName");     //Selecciono el boton de introducir el nombre
-introName.addEventListener("click", introNameGame);         //Añado un evento click al boton
+const introName = document.querySelector(".introName"); //Selecciono el boton de introducir el nombre
+introName.addEventListener("click", introNameGame); //Añado un evento click al boton
 
 function introNameGame() {
     gameUser = input.value.toUpperCase();
     li.innerHTML = gameUser;
     if (isNaN(gameUser) && gameUser.length <= 10) {
+         textTitle();
         header.classList.add("form_hide");
         main.classList.remove("main_hide");
+
     }
+    
 }
