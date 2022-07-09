@@ -5,7 +5,7 @@
 // 1 Crear un arreglo con las 16 "cartas"
 // 2 desordenar el arr e imprimirlas en cada casilla
 
-const emojis = ["😃", "😁", "🤣", "😊", "😇", "🙃", "😍", "😝", "🧐", "🤓", "😎", "🤩", "🥳", "😖", "😭", "😤", "🤬", "🤯", "🥶", "😱", "🤫", "😑", "🙄", "😴", "😵", "🤐", "🤢", "🤑", "🤠", "😈", "👹", "🤡", "💩", "👻", "💀", "👽", "👾", "🤖", "🎃", "👋", "👌", "🤟", "🙏", "🦷", "🦴", "👀", "🎅"]
+const emojis = ["😃", "😁", "🤣", "😊", "😇", "🙃", "😍", "😝", "🧐", "🤓", "😎", "🤩", "🥳", "😖", "😭", "😤", "🤬", "🤯", "🥶", "😱", "🤫", "😑", "🙄", "😴", "😵", "🤐", "🤢", "🤑", "🤠", "😈", "👹", "🤡", "💩", "👻", "💀", "👽", "👾", "🤖", "🎃", "👋", "👌", "🤟", "🙏", "🦷", "🦴", "👀", "🎅"];
 
 
 const arr1 = ["😀", "😀", "😎", "😎", "😈", "😈", "🤣", "🤣", "😝", "😝", "😖", "😖", "👹", "👹", "👻", "👻"];
@@ -416,26 +416,32 @@ function addUser() {
 
 //Funcion para comprobar si el usuario esta en la lista
 function checkUser(user, array) {
+    //Comprobar si la lista esta vacia
     if (array.length === 0) {
-        console.log("El usuario no esta en la lista");
+        //añadir el usuario y sus puntos a la lista
         array.push([user, gameTries]);
-    } else {
-        //Comprobar si el usuario esta en la lista
-        for (let i = 0; i < array.length; i++) {
-            if (array[i][0] === user) {
-                //Si esta en la lista actualizar el numero de tries al mas bajo
-                console.log("El usuario esta en la lista");
-                if (array[i][1] > gameTries) {
-                    array[i][1] = gameTries;
-                    console.log("Mejoró la puntuación");
-                    break;
-                }
-                return console.log("No mejoró la puntuacion");
+        console.log("La lista esta vacia");
+    }
+    //Comprobar si la lista no esta vacia
+    else {
+        //Si user esta en la lista
+        if (array.find((element) => element[0] === user)) {
+            console.log("El jugador está en la lista");
+            //comprobar si el numero de tries es menor que el del usuario en la lista
+            if (gameTries < array.find((element) => element[0] === user)[1]) {
+                //reemplazar el numero de tries del usuario en la lista
+                array.find((element) => element[0] === user)[1] = gameTries;
+                console.log("Mejoró la puntuación");
+                return;
             }
+            console.log("No mejoró la puntuación");
         }
-        //Si no esta en la lista añadir el usuario y sus puntos
-        console.log("El usuario no esta en la lista");
-        array.push([user, gameTries]);
+        //Si user no esta en la lista
+        else {
+            //añadir el usuario y sus puntos a la lista
+            array.push([user, gameTries]);
+            console.log("El jugador no está en la lista");
+        }
     }
 }
 
